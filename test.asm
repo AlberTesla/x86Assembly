@@ -1,6 +1,6 @@
 segment .data
-x db 0xff
-y db 0x01
+x db 1
+y db 255
 
 segment .text
     global _asm_main
@@ -17,7 +17,7 @@ _asm_main:
 
     mov eax, DWORD 0
     mov al, cl
-    add al, dl
+    sub al, dl
 
     mov esp, ebp
     pop ebp

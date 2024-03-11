@@ -1,7 +1,10 @@
 #include<stdio.h>
+#include<string.h>
 
 int __cdecl asm_main(void);
 int __cdecl get_flags(void);
+
+const char* flagString = "C P A ZS         ";
 
 void printFlagBits(unsigned int flags){
     int carry = 0;
@@ -85,7 +88,7 @@ void printFlagBits(unsigned int flags){
 
 void checkEndian(){
     unsigned int x = 0x0000001;
-    if (*((unsigned char*)(&x) + 0) == 0x01){
+    if (*((unsigned char*)(&x)) == 0x01){
         printf("little endian\n");
     }
     else{
@@ -101,7 +104,12 @@ int main(){
     retstatus = asm_main();
     flags = get_flags();
     printf("result : %02x\n", retstatus);
-    printf("flags : %08x\n", flags);
+    printf("flag register : %08x\n", flags);
+    printf("                  ");
+    for (int i = 0; i < strlen(flagString); i++){
+        printf("%c", flagString[strlen(flagString) - i - 1]);
+    }
+    printf("\n");
     printFlagBits(flags);
     return retstatus;
 }
