@@ -1,80 +1,73 @@
 extern _printf
 extern _scanf
 
-global _asm_main
-
 section .data
-    str1 db "enter the number to print prime numbers upto", 0
-    format db "%u", 0
-    newLine db 10
-    lineFormat db "%c", 0
+    string db "hello world!", 0
+    newline db 10
+    lineformat db "%c", 0
+    hexformat db "%08x %08x %08x %08x", 0
+    hexformat1 db "%08x", 0
 
-section .bss
-    inputNum resd 1
-    divisor resd 1
-    dividend resd 1
-
-section .code
-    _asm_main:
+section .text
+global _asm_main
+_asm_main:
     push ebp
     mov ebp, esp
+    pusha
 
-;print string to get number
-    lea eax, [str1]
+    lea eax, [string]
     push eax
     call _printf
-    add esp, 4
+    call printLine
 
-;read data into inputNumber variable
-    lea eax, [inputNum]
-    push eax
-    lea eax, [format]
-    push eax
-    call _scanf
-    add esp, 8
-
-;make copy of inputnum in eax and check if it's greater than 2
-    mov eax, [inputNum]
-    cmp eax, 2
-    jbe anotherNum
+    push DWORD 0
+    push DWORD 1
     push DWORD 2
-    lea eax, [format]
-    push eax
-    call _printf
-    add esp, 8
-    call println
-
-;make copy of inputnum in eax and check if it's greater than 3
-anotherNum:
-    mov eax, [inputNum]
-    cmp eax, 3
-    jbe nextLabel
     push DWORD 3
-    lea eax, [format]
+
+    mov eax, [ebp - 4*2 - 4*8]
+    push eax
+    lea eax, [hexformat1]
     push eax
     call _printf
-    add esp, 8
-    call println
+    call printLine
 
-nextLabel:
-    mov [dividend], DWORD 5
-    
-whileLabel:
-    ;;here is pending
+    mov eax, [ebp - 4*3 - 4*8]
+    push eax
+    lea eax, [hexformat1]
+    push eax
+    call _printf
+    call printLine
 
-    mov eax, [inputNum]
+    mov eax, [ebp - 4*4 - 4*8]
+    push eax
+    lea eax, [hexformat1]
+    push eax
+    call _printf
+    call printLine
+
+    mov eax, [ebp - 4*5 - 4*8]
+    push eax
+    lea eax, [hexformat1]
+    push eax
+    call _printf
+    call printLine
+
+    add esp, 4*13
+    popa
+    mov eax, 100
     mov esp, ebp
     pop ebp
     ret
-;end of asm_main function
 
-;function print new line
-println:
+printLine:
     push ebp
     mov ebp, esp
 
-    push DWORD 10
-    lea eax, [lineFormat]
+    lea eax, [newline]
+    mov eax, [eax]
+    push eax
+    lea eax, [lineformat]
     push eax
     call _printf
     add esp, 8

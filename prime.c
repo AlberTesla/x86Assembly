@@ -2,7 +2,6 @@
 int __cdecl asm_main(void);
 unsigned int* __cdecl get_address(void);
 
-
 //write this code in assembly
 
 int test(){
@@ -22,8 +21,8 @@ int test(){
     dividend = 5;
     while (dividend <= inputNum){
         divisor = 3;
-        //check for each number until the divisor 2 >= N
-        while (divisor * divisor < inputNum){
+        //check for each number until the divisor ^ 2 >= N
+        while (divisor * divisor < inputNum){//asm
             if (dividend % divisor != 0){
                 divisor += 2;//odd numbers only 
             }

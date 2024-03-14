@@ -4,7 +4,7 @@
 int __cdecl asm_main(void);
 int __cdecl get_flags(void);
 
-const char* flagString = "C P A ZS         ";
+const char* flagString = "C P A ZS   O     ";
 
 void printFlagBits(unsigned int flags){
     int carry = 0;
